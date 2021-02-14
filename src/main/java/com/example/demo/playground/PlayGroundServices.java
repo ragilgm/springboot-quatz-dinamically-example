@@ -1,5 +1,7 @@
 package com.example.demo.playground;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +19,21 @@ public class PlayGroundServices {
 	public void runTestBuilder() {
 		TimerInfo timerInfo = new TimerInfo();
 		timerInfo.setTotalFireCount(5);
-		timerInfo.setRepeatInterval(2000);
+		timerInfo.setRepeatInterval(1);
 		timerInfo.setInitialOfset(1000);
 		timerInfo.setRunForever(true);
 		timerInfo.setCallbackDate(" ini adalah callback data ");
 		schedulerServices.schedule(TestJob.class, timerInfo);
 	}
 	
+	public List<TimerInfo> getAllRunningJobs(){
+		return schedulerServices.getAllRunningTimmer();
+	}
+
+	public TimerInfo getAllRunningJobsById(String id) {
+		return schedulerServices.getAllRunningTimmerById(id);
+	}
+		
 
 	
 }

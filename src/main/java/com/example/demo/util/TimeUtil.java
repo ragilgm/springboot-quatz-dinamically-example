@@ -22,20 +22,19 @@ public class TimeUtil {
 				.withIdentity(jobClass.getSimpleName())
 				.setJobData(jobDataMap)
 				.build();
-		
 	}
 	
 	public static Trigger buidTrigger(final Class<? extends Job> jobClass, final TimerInfo info) {
 		SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-													.withIntervalInMilliseconds(info.getRepeatInterval());
+													.withIntervalInHours((int) info.getRepeatInterval());
 		if(info.isRunForever()) {
 			scheduleBuilder.repeatForever();
 		}else {
 			scheduleBuilder.withRepeatCount(info.getTotalFireCount()-1);
 		}
-		
 		return TriggerBuilder.newTrigger().withIdentity(jobClass.getSimpleName())
-				.withSchedule(scheduleBuilder).startAt(new Date(System.currentTimeMillis()+info.getInitialOfset())).build();
+				.withSchedule(scheduleBuilder).startAt(new Date(System.currentTimeMillis()+info.getInitialOfset()))
+				.build();
 		
 	}
 
