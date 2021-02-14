@@ -26,7 +26,7 @@ public class TimeUtil {
 	
 	public static Trigger buidTrigger(final Class<? extends Job> jobClass, final TimerInfo info) {
 		SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-													.withIntervalInHours((int) info.getRepeatInterval());
+													.withIntervalInSeconds((int) info.getRepeatInterval());
 		if(info.isRunForever()) {
 			scheduleBuilder.repeatForever();
 		}else {

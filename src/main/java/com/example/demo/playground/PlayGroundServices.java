@@ -19,9 +19,10 @@ public class PlayGroundServices {
 	public void runTestBuilder() {
 		TimerInfo timerInfo = new TimerInfo();
 		timerInfo.setTotalFireCount(5);
-		timerInfo.setRepeatInterval(1);
+		timerInfo.setRemainingFireCount(timerInfo.getTotalFireCount());
+		timerInfo.setRepeatInterval(20);
 		timerInfo.setInitialOfset(1000);
-		timerInfo.setRunForever(true);
+		timerInfo.setRunForever(false);
 		timerInfo.setCallbackDate(" ini adalah callback data ");
 		schedulerServices.schedule(TestJob.class, timerInfo);
 	}
@@ -34,6 +35,11 @@ public class PlayGroundServices {
 		return schedulerServices.getAllRunningTimmerById(id);
 	}
 		
+	
+	public void deleteTimerId(String timerId) {
+		 schedulerServices.deleteTimer(timerId);
+	}
+	
 
 	
 }

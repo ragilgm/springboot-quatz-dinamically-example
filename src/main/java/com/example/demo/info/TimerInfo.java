@@ -3,6 +3,7 @@ package com.example.demo.info;
 public class TimerInfo {
 
 	private int totalFireCount;
+	private int remainingFireCount;
 	private boolean runForever;
 	private long repeatInterval;
 	private long initialOfset;
@@ -46,6 +47,14 @@ public class TimerInfo {
 
 	public void setCallbackDate(String callbackDate) {
 		this.callbackDate = callbackDate;
+	}
+
+	public int getRemainingFireCount() {
+		return remainingFireCount;
+	}
+
+	public void setRemainingFireCount(int remainingFireCount) {
+		this.remainingFireCount = remainingFireCount;
 	}
 
 }

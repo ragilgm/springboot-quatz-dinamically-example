@@ -60,13 +60,41 @@ public class SchedulerServices {
 		}
 	}
 
-	public TimerInfo getAllRunningTimmerById(String id) {
-		try { 
-			final JobDetail jobDetail = scheduler.getJobDetail(new JobKey(id));	
-			return (TimerInfo) jobDetail.getJobDataMap().get(id);
+	public TimerInfo getAllRunningTimmerById(String timerId) {
+		try {
+			final JobDetail jobDetail = scheduler.getJobDetail(new JobKey(timerId));
+
+			if (jobDetail == null) {
+				LOG.error("failed to find with id :" + timerId);
+				return null;
+			}
+			return (TimerInfo) jobDetail.getJobDataMap().get(timerId);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return null;
+		}
+	}
+
+	public void updateTimer(final String timerId, final TimerInfo Info) {
+		try {
+			final JobDetail jobDetail = scheduler.getJobDetail(new JobKey(timerId));
+			if (jobDetail == null) {
+				LOG.error("failed to find with id :" + timerId);
+				return;
+			}
+
+			jobDetail.getJobDataMap().put(timerId, Info);
+
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+	}
+
+	public void deleteTimer(final String timerId) {
+		try {
+			scheduler.deleteJob(new JobKey(timerId));
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
 		}
 	}
 
@@ -74,6 +102,8 @@ public class SchedulerServices {
 	public void init() {
 		try {
 			scheduler.start();
+			scheduler.getListenerManager().addTriggerListener(new SImpleTriggerListener(this));
+
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
